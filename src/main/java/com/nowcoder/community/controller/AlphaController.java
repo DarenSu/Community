@@ -1,9 +1,11 @@
 package com.nowcoder.community.controller;
 
+import com.nowcoder.community.util.CommunityUtil;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -143,6 +145,29 @@ public class AlphaController {
         return list;
     }
 
+    // cookie 示例
+    @RequestMapping(path = "/cookie/set", method = RequestMethod.GET)
+    @ResponseBody
+    public String setCookie(HttpServletResponse httpServletResponse){
+        // 创建cookie
+        Cookie cookie = new Cookie("code", CommunityUtil.generateUUID());
+        // 设置cookie的生效范围，一般来说发几个路径即可，不能每一次都是全部路径都发
+        cookie.setPath("/community/alpha");
+        // cookie的默认生存时间是，关掉浏览器就消失，但是你可以修改其生存时间，那么其辉存储在硬盘里面，知道到了时间才会失效
+        cookie.setMaxAge(60 * 10);
+        // 发送cookie，将其加到httpServletResponse头部
+        httpServletResponse.addCookie(cookie);
+
+        return "set cookie";
+    }
+    // 获得cookie,但是只想要众多的cookie中的一个就可以，所以使用(@CookieValue("code") String code)，
+    // 就是说在cookie中取值key为code的值，赋值给String code即可
+    @RequestMapping(path = "/cookie/get", method = RequestMethod.GET)
+    @ResponseBody
+    public String getCookie(@CookieValue("code") String code) {
+        System.out.println(code);
+        return "get cookie";
+    }
 }
 
 

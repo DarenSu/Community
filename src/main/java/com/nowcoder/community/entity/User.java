@@ -7,7 +7,7 @@ public class User {
     private int id;
     private String username;
     private String password;
-    private String salt;
+    private String salt;  //随机字符串
     private String email;
     private int type;
     private int status;
