@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AJAX</title>
+</head>
+<body>
+<!--些简单一点，弄一个按钮，一点按钮就向服务器  发布这个异步请求-->
+    <p>
+        <input type="button" value="发送" onclick="send();">
+    </p>
+    <!-- 实现上面的send方法需要 引入jquery   -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
+    <script>
+        function send() {
+            $.post( // 常用三个参数，1、访问路径   2、向服务器提交的数据（生成一个js对象就是json）   3、声明回调函数
+                "/community/alpha/ajax",
+                {"name":"张三","age":23},
+                // 传入的是json字符串
+                function(data) {  //  当服务器给浏览器做出响应之后，浏览器得到这个相应之后会调用function()这个方法，
+                    // 并将服务器返回的数据传给这个方法，data就是服务器向浏览器返回的数据，当然是个字符串
+                    // 为了证明，将其打印出来
+                    console.log(typeof(data));//数据类型
+                    console.log(data);//数据本身内容
+
+                    data = $.parseJSON(data);//字符串转成对象，打印其类型
+                    console.log(typeof(data));
+                    console.log(data.code);//
+                    console.log(data.msg);//
+                }
+            );
+        }
+    </script>
+</body>
+</html>

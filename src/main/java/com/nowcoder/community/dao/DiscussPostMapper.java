@@ -20,7 +20,11 @@ public interface DiscussPostMapper {
     // 如果只有一个参数，并且在<if>使用，则必须取别名
     int selectDiscussPostRows(@Param("userId") int userId);
 
+    // 增加帖子的方法，返回的是行数int   插入数据时返回的是实体
+    int insertDiscussPost(DiscussPost discussPost);
 
+    // 帖子详细信息展示
+    DiscussPost selectDiscussPostById(int id);
 }
 
 
